@@ -1,0 +1,121 @@
+%Plantilla experimental para un reporte de laboratorio realizado en LaTex por Jorge A. el 10 de marzo del 2021.
+\documentclass[12pt]{article}
+\usepackage[a4paper, left=3.17cm, right=3.17cm, top=2.54cm, bottom=2.54cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{chemformula}
+\usepackage{cite}
+\usepackage[colorlinks, linkcolor=black, anchorcolor=black, citecolor=black]{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref} %Insertar links
+\usepackage{eso-pic}
+\usepackage{calc}
+\setlength{\parskip}{0.5em}
+\title{Titulo del documento.}
+\graphicspath{{figures/}} % Location of the graphics files
+\author{\textup{Daniel}}
+\begin{document}
+ 
+% Esta sección corresponde a los margenes.
+\newlength{\PageFrameTopMargin}
+\newlength{\PageFrameBottomMargin}
+\newlength{\PageFrameLeftMargin}
+\newlength{\PageFrameRightMargin}
+
+% Esta sección sirve para modificar el tamaño de los bordes de pagina.
+\setlength{\PageFrameTopMargin}{1.0cm}
+\setlength{\PageFrameBottomMargin}{1.0cm}
+\setlength{\PageFrameLeftMargin}{1.0cm}
+\setlength{\PageFrameRightMargin}{1.0cm}
+% Fin del comunicado. :D
+\makeatletter
+
+\newlength{\Page@FrameHeight}
+\newlength{\Page@FrameWidth}
+
+\AddToShipoutPicture{
+  \thinlines
+  \setlength{\Page@FrameHeight}{\paperheight-\PageFrameTopMargin-\PageFrameBottomMargin}
+  \setlength{\Page@FrameWidth}{\paperwidth-\PageFrameLeftMargin-\PageFrameRightMargin}
+  \put(\strip@pt\PageFrameLeftMargin,\strip@pt\PageFrameTopMargin){
+    \framebox(\strip@pt\Page@FrameWidth, \strip@pt\Page@FrameHeight){}}}
+
+\makeatother
+%\RequirePackage{eso-pic,calc}
+%
+
+\begin{titlepage}
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+	%\includegraphics[width=8cm]{escudo-texto-bn.png}\\[1cm] 
+	%LA sección siguiente centra mejor las cosas.
+	\begin{figure}
+		\centering
+		\includegraphics{escudo-texto-bn.png}
+	\end{figure}
+	%Fin del comunicado Juaquin.
+	\centering 
+	\quad\\[1.5cm]
+	\textsl{\Large Universidad Autónoma de Chihuahua.}\\[0.5cm] 
+	\textsl{\large Facultad De Ingeniería: Ingeniería Física.}\\[0.5cm] 
+	\makeatletter
+	\HRule \\[0.4cm]
+	{ \huge \bfseries \@title}\\[0.4cm] 
+	\HRule \\[1.5cm]
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Autor:}\\
+			\@author 
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Asesor:} \\
+			\textup{Nombre del maestro.}
+		\end{flushright}
+	\end{minipage}\\[3cm]
+	\makeatother
+	{\large Reporte De Laboratorio Para La Asignatura De:}\\[0.5cm]
+	{\large \emph{Grupo - Materia}}\\[0.5cm]
+	{\large \today}\\[2cm] 
+	\vfill 
+\end{titlepage}
+ 
+\newpage
+\begin{center}
+    \textbf{\Large Titulo de documento.}
+    \end{center}
+
+\section*{Introducción.}
+    considere el movimiento de un fluido incompresible  que se mueve a velocidades bastante menores al la velocidad del sonido. Por un flujo nos referiremos a una función vectorial que representa la velocidad del fluido en cada instante de tiempo. Este flujo lo definiremos como estacionario, es decir que no depende del tiempo, ademas de que sera paralelo al plano es decir que no tendrá componentes perpendiculares al plano 'x-y'. De tal manera que un flujo es caracterizado por una función vectorial de 2 variables o de manera equivalente a una función compleja
+
+\newpage	
+\section*{Materiales y Métodos}
+
+Descripción de los materiales con una explicación de su uso durante la practica.
+
+\newpage
+\section*{Cálculos y resultados}
+Se contraponen los datos obtenidos del experimento con los teóricos.
+
+\newpage
+\section*{Análisis de datos}
+    \begin{itemize}
+        \item Resultado 1.
+        \item Resultado 2.
+        \item Resultado 3.      
+    \end{itemize}
+
+\newpage
+\section*{Conclusiones.}
+
+\newpage
+\begin{center}
+    \textbf{\Large Referencias.}
+    \end{center}
+
+\end{document}
