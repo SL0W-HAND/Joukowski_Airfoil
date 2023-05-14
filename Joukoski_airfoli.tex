@@ -56,7 +56,7 @@
 		\centering
 		\includegraphics{escudo-texto-bn.png}
 	\end{figure}
-	%Fin del comunicado Juaquin.
+	%Fin del comunicado Joaquin.
 	\centering 
 	\quad\\[1.5cm]
 	\textsl{\Large Universidad Autónoma de Chihuahua.}\\[0.5cm] 
@@ -91,24 +91,73 @@
     \end{center}
 
 \section*{Introducción.}
-    considere el movimiento de un fluido incompresible  que se mueve a velocidades bastante menores al la velocidad del sonido. Por un flujo nos referiremos a una función vectorial que representa la velocidad del fluido en cada instante de tiempo. Este flujo lo definiremos como estacionario, es decir que no depende del tiempo, ademas de que sera paralelo al plano es decir que no tendrá componentes perpendiculares al plano 'x-y'. De tal manera que un flujo es caracterizado por una función vectorial de 2 variables o de manera equivalente a una función compleja
+	%% otra intro 
+	\noindent Considere que el movimiento de un fluido esta dado por un campo vectorial de velocidades $\vec{V}(x,y,z)$, además consideremos que el fluido es irrotacional es decir que se cumple $\vec{\nabla} \times \vec{V}=0 $ lo que implica que debe de existir una función de potencial de velocidad tal que $\vec{\nabla}\varphi = \vec{V}$.Además consideremos que con la region que estamos tratando no existen fuentes ó pozos de flujo, por lo que debe de cumplirse la ecuación de continuidad para dinámica de fluidos
+	\begin{equation}
+		\frac{\partial \rho}{\partial t} + \vec{\nabla} \cdotp (\rho \vec{V}) =0		
+	\end{equation}
+	Si el fluido no varia en densidad $\rho$ es decir que $\frac{\partial \rho}{\partial t} =0 $ ó $\rho = const$, implica $\vec{\nabla} \cdotp (\rho \vec{V}) = 0 \longrightarrow \vec{\nabla} \cdotp (\vec{V}) =0 $, o en términos de la función potencial:
+	\begin{equation}
+		\vec{\nabla} \cdotp (\vec{\nabla}\varphi) = \nabla^2 \varphi =0 
+	\end{equation}	 
+	vemos que la función de potencial se cumple la ecuación de Laplace 
+	
+	\noindent La teoría de potencial	en su mayor parte es el estudio de funciones armónicas, ó en otras palabra funciones que satisfagan la ecuación de Laplace $\nabla^2u = u_{xx} + u_{yy} + u_{zz}= 0 $, en alguna region tridimensional sujeta a ciertas condiciones en la frontera de la region, si por alguna razón la función $u$ es independiente en la tercera coordenada $z$ implica que estaremos tratando con una ecuación de Laplace bidimensional $\nabla^2u = u_{xx} + u_{yy} =0$. Un resultado conocido de las funciones analíticas en variable compleja es que la parte real (ó compleja) satisface la ecuación de Laplace bidimensional en el dominio de analiticidad, siendo por esta razón que la teoría de funciones analíticas se convierte en una herramienta poderosa para el estudio de la teoría de potencial en dos dimensiones.    
 
-\newpage	
-\section*{Materiales y Métodos}
+	\noindent Si consideramos el flujo paralelo al plano es decir que no tendrá componentes en dirección $z$ podemos asumir que el potencial de velocidad bidimensional  $\varphi(x,y)$ tal que $\nabla^2 \varphi =0 $ en algún dominio $D$ del plano $xy$, y tomemos a $\varphi$ como la parte real de una función analítica compleja
+	\begin{equation}
+		F(z)=\varphi (x,y)	+ i \psi(x,y)	
+	\end{equation}
+	$F(z)$ se llama el potencial complejo, donde $\psi$ es llamada  función de flujo y $\psi = c_n$ son lineas tangentes al flujo del fluido.
+	
 
-Descripción de los materiales con una explicación de su uso durante la practica.
+	%revisar 
+	 %55555555555555555%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage
-\section*{Cálculos y resultados}
-Se contraponen los datos obtenidos del experimento con los teóricos.
+	Si una frontera solida es colocada en en el fluido, implica que esta representa una linea de flujo, por lo que el problema se reduce  a buscar una función de flujo $\psi$ para esa frontera que pueda ser representada como $\psi=c$, y una vez que la función pueda ser encontrada la velocidad puede ser calculada con la ecuaciones de Cauchy-Riemann
+	\begin{equation}
+		\begin{split}
+			v_x &= \frac{\partial \varphi}{\partial x} = \frac{\partial \psi}{\partial y } \\
+			v_y &= \frac{\partial \varphi}{\partial y} =- \frac{\partial \psi}{\partial x } \\
+		\end{split}
+	\end{equation}
+	
+\section{Dinámica de fluidos}
+	lol
+	\subsection{Flujos Elementales }
+		Si sabemos que la ecuación de Laplace cumple la propiedad de ser una ecuación diferencial lineal, eso significa que podemos añadir soluciones entre si y también sera una solución, a estas soluciones individuales se les denomina flujos elementales, que servirán como bloques de construcción para construir la solución para flujos mas complejos, existen multitude de estas funciones 
+		\subsubsection{Flujo uniforme}
+			El potencial complejo 
+			\begin{equation}
+				F(z) = U_0 e^{-i\alpha}z
+			\end{equation}
+			Representa un flujo uniforme con velocidad $U_0$ en la dirección del angulo $\alpha$ respecto al eje de las $x$.
+			Como ejemplo vamos a calcular cual sera el campo de velocidad $\vec{V}=<v_x (x,y),v_y (x,y)>$, para eso obtendremos la función de flujo $\psi$
+			\begin{equation}
+				\psi = Im[F(z)] = Im[U_0 e^{-i\alpha}z] =	U_0(y \cos{\left(\alpha \right)}- x \sin{\left(\alpha \right)} )
+			\end{equation}
+			recordando que $v_x = \frac{\partial \psi}{\partial y}$ y $ v_y = -\frac{\partial \psi}{\partial x}$, tenemos que
+			
+			\begin{equation}
+				\begin{split}
+				v_x &= U_0 cos(\alpha)\\
+				v_y &= U_0 sin(\alpha)\\
+				\end{split}
+			\end{equation}
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%agregar foto
 
-\newpage
-\section*{Análisis de datos}
-    \begin{itemize}
-        \item Resultado 1.
-        \item Resultado 2.
-        \item Resultado 3.      
-    \end{itemize}
+		\subsubsection{Vorice}
+			Un vórtice de magnitud $C$ en el origen esta representado por la función de potencial compleja
+			\begin{equation}
+				F(z)= -\frac{iC}{2 \pi} Log(z)
+			\end{equation}
+			Para $C<0$ la rotación es en sentido de las manecillas del reloj, y para $C>0$ es en sentido contrario
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%agregar foto
+			
+\section{Mapeo conforme}
+
 
 \newpage
 \section*{Conclusiones.}

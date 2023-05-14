@@ -86,6 +86,19 @@ class RoodHeatGraph(ThreeDScene):
         )
 
 
+class UniformFlowVectorField(Scene):
+    def construct(self):
+        plane = NumberPlane(x_range=(-5, 5, 1), y_range=(-5, 5, 1))
+        self.add(plane)
+
+        def stream_lines_func(point):
+            x, y = point[:2]
+            return np.array([x, y, 0])
+
+        stream_lines = StreamLines(stream_lines_func, delta_x=0.5, delta_y=0.5)
+        self.add(stream_lines)
+
+
 with tempconfig({"quality": "medium_quality", "preview": False, "pixel_width": 1920, "pixel_height": 1080}):
-    scene = RoodHeatGraph()
+    scene = AV()
     scene.render()
