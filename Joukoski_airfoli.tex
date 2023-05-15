@@ -16,9 +16,12 @@
 \usepackage{calc}
 \setlength{\parskip}{0.5em}
 \title{Titulo del documento.}
-\graphicspath{{figures/}} % Location of the graphics files
+\graphicspath{{./figures/},{./media/images/}} % Location of the graphics files
 \author{\textup{Daniel}}
 \begin{document}
+
+%definitions
+\newtheorem{theorem}{Theorem}[section]
  
 % Esta sección corresponde a los margenes.
 \newlength{\PageFrameTopMargin}
@@ -92,7 +95,42 @@
 
 \section*{Introducción.}
 	%% otra intro 
-	\noindent Considere que el movimiento de un fluido esta dado por un campo vectorial de velocidades $\vec{V}(x,y,z)$, además consideremos que el fluido es irrotacional es decir que se cumple $\vec{\nabla} \times \vec{V}=0 $ lo que implica que debe de existir una función de potencial de velocidad tal que $\vec{\nabla}\varphi = \vec{V}$.Además consideremos que con la region que estamos tratando no existen fuentes ó pozos de flujo, por lo que debe de cumplirse la ecuación de continuidad para dinámica de fluidos
+	\noindent La técnica de mapeo conforme en variable compleja es una herramienta matemática que permite transformar regiones del plano complejo en otras regiones de manera que se preserven los ángulos y se conserven algunas propiedades geométricas. En otras palabras, el mapeo conforme es una transformación que no distorsiona los ángulos locales y mantiene cierta estructura geométrica en la región de partida.
+
+	El mapeo conforme se puede utilizar para transformar una región del plano complejo donde se conoce una solución de una ecuación diferencial en otra región del plano donde se desea encontrar una solución, para ejemplificar esto suponga que se busca conocer como es el comportamiento del aire en el siguiente perfil alar
+
+	\begin{figure}[!h]
+		\begin{small}
+			\begin{center}
+				\includegraphics[width=0.95\textwidth]{Airfoil_ManimCE.png}
+			\end{center}
+			\caption{}
+			\label{fig:}
+		\end{small}
+	\end{figure}
+	
+	\noindent Este es un problema el cual parece demasiado complicado a primera vista, pero podemos valernos de uno de los resultados de flujo importantes obtenidos mediante el mapeo conforme son las soluciones del flujo de una familia de formas aerodinámicas conocidas como perfiles de Joukowski, que son el resultado de  la transformada de Joukowski, que debe su nombre a Nikolai Zhukovsky (quién la publicó en 1910), es una transformación conforme históricamente utilizada para entender algunos principios del diseño de perfiles.
+	
+	L transformada es
+	\begin{equation}
+		w = z - a/z
+		\label{eq:}
+	\end{equation}
+	
+	y usando la técnica de transformación compuesta asi es como podemos pasar de un circulo a este perfil aerodinámico
+	\begin{figure}[!h]
+		\begin{small}
+			\begin{center}
+				\includegraphics[width=0.95\textwidth]{JoukouskiTransform_ManimCE_v0.17.1.png}
+			\end{center}
+			\caption{}
+			\label{fig:1}
+		\end{small}
+	\end{figure}
+	
+	De manera que comenzamos con una solución en el flujo que pasa por un cilindro circular con circulación para después hacer uso del mapeo conforme para transformar el cilindro en una forma aerodinámica.	
+	
+	\noindent Primero debemos de hacer unas consideraciones teniendo en cuenta la dinámica de fluidos Considere que el movimiento de un fluido esta dado por un campo vectorial de velocidades $\vec{V}(x,y,z)$, además consideremos que el fluido es irrotacional es decir que se cumple $\vec{\nabla} \times \vec{V}=0 $ lo que implica que debe de existir una función de potencial de velocidad tal que $\vec{\nabla}\varphi = \vec{V}$.Además consideremos que con la region que estamos tratando no existen fuentes ó pozos de flujo, por lo que debe de cumplirse la ecuación de continuidad para dinámica de fluidos
 	\begin{equation}
 		\frac{\partial \rho}{\partial t} + \vec{\nabla} \cdotp (\rho \vec{V}) =0		
 	\end{equation}
@@ -123,10 +161,8 @@
 	\end{equation}
 	
 \section{Dinámica de fluidos}
-	lol
-	\subsection{Flujos Elementales }
-		Si sabemos que la ecuación de Laplace cumple la propiedad de ser una ecuación diferencial lineal, eso significa que podemos añadir soluciones entre si y también sera una solución, a estas soluciones individuales se les denomina flujos elementales, que servirán como bloques de construcción para construir la solución para flujos mas complejos, existen multitude de estas funciones 
-		\subsubsection{Flujo uniforme}
+		Si sabemos que la ecuación de Laplace cumple la propiedad de ser una ecuación diferencial lineal, eso significa que podemos añadir soluciones entre si y también sera una solución, a estas soluciones individuales se les denomina flujos elementales, que servirán como bloques de construcción para construir la solución para flujos mas complejos, existen multitud de estas funciones, pero solo no concentaremos en aquellas que nos sirvan para este problema particular.
+		\subsection{Flujo uniforme}
 			El potencial complejo 
 			\begin{equation}
 				F(z) = U_0 e^{-i\alpha}z
@@ -145,19 +181,108 @@
 				\end{split}
 			\end{equation}
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-			%agregar foto
+			\begin{figure}[!h]
+				\begin{small}
+					\begin{center}
+						\includegraphics[width=0.95\textwidth]{uniformFlow_ManimCE_v0.17.1.png}
+					\end{center}
+					\caption{}
+					\label{fig:}
+				\end{small}
+			\end{figure}
+			
 
-		\subsubsection{Vorice}
-			Un vórtice de magnitud $C$ en el origen esta representado por la función de potencial compleja
+		\subsection{Vorice}
+			Un vórtice de magnitud $\Gamma $ en el origen esta representado por la función de potencial compleja
 			\begin{equation}
 				F(z)= -\frac{iC}{2 \pi} Log(z)
 			\end{equation}
-			Para $C<0$ la rotación es en sentido de las manecillas del reloj, y para $C>0$ es en sentido contrario
+			Para $\Gamma<0$ la rotación es en sentido de las manecillas del reloj, y para $\Gamma>0$ es en sentido contrario
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-			%agregar foto
+			\begin{figure}[!h]
+				\begin{small}
+					\begin{center}
+						\includegraphics[width=0.95\textwidth]{vortex_ManimCE_v0.17.1.png}
+					\end{center}
+					\caption{}
+					\label{fig:}
+				\end{small}
+			\end{figure}
 			
-\section{Mapeo conforme}
 
+		\subsection{Flujo uniforme alrededor de un circulo }
+		Considere ahora un flujo uniforme con velocidad $U_0$en la dirección $x$, con un potencial complejo $F(z)= U_0 z$, si se coloca un obstáculo circular en $|z| =R$ provocara que el fluido sea desviado.
+		
+		para intentar resolver la función de potencial que tendrá el circulo usaremos un resultado encontrado por el matemático ingles L.M. Milne-Thompson 
+		\begin{theorem}[Teorema del circulo]
+			Suponga un potencial complejo $F(z)$, tal que ninguna de las singularidades de $F(z)$ ocurren en $|z|>R$, se cumple que
+			\begin{equation}
+				w = F(z) + \overline{F \left( \frac{R^2}{\overline{z} }\right)} 
+				\label{Teorema_del_circulo}
+			\end{equation}
+			(Donde la barra denota el complejo conjugado) tiene las mismas singularidades que $F(z)$ en $|z|>a $, y el circulo denotado por $|z|= R $ es una linea de flujo.
+		\end{theorem}
+		
+		podemos darnos cuenta de que el potencial $F(z)= U_0 z$ satisface el teorema, por lo que podemos obtener el potencial complejo  del flujo al rededor de un circulo sustituyendo $F(z)= U_0 z$ en \ref*{Teorema_del_circulo} 
+
+		\begin{equation}
+			w = U_0 z + \frac{\overline{U_0 R^2} }{\overline{z} } = U_0 z +\frac{U_0 R^2}{z} 
+		\end{equation}
+
+		y la función de flujo es la parte compleja de $w$
+		\begin{equation}
+			Im[w]=\psi =  U_0 y \left( 1- \frac{R^2}{x^2 + y^2}\right)
+			\label{Potencial}
+		\end{equation}
+		
+
+		\begin{figure}[!h]
+			\begin{small}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{FlowAroundCircle_ManimCE_v0.17.1.png}
+				\end{center}
+				\caption{}
+				\label{fig:}
+			\end{small}
+		\end{figure}
+		
+		\subsubsection{Flujo uniforme alrededor de un circulo con circulacion}
+			si agregamos un vórtice al potencial definido en \ref{Potencial} se obtiene el flujo con circulación
+			\begin{equation}
+				w = Uz + \frac{ Ua^2}{z} - \frac{i \Gamma}{2 \pi}\log z
+			\end{equation}
+			Donde  $\Gamma$ es la circulación, hallada empleando la condición de Kutta (una condición de límite viscoso basada en la observación física utilizada con un modelo teórico no viscoso) establece que el flujo sale suavemente del borde de salida afilado de una superficie aerodinámica, esta no sera deducida aquí por lo que solo usaremos la siguiente formula.
+
+			\begin{equation}
+				\Gamma=4 \pi V_0 \sqrt{\left(\mathbb{1}-\mu_\gamma\right)^2+\mu_y^2} \sin \left(\alpha+\sin ^{-1}\left(\frac{\mu_y}{\sqrt{\left(\mathbb{1}-\mu_\gamma\right)^2+\mu_y^2}}\right)\right) 
+				\label{eq:}
+			\end{equation}
+
+			Donde $\mu=\mu_z+i \mu_y$, y en este caso la función de flujo $ \psi $ es 
+			
+			\begin{equation}
+				\psi = U y \left( 1 - \frac{a^2}{x^2+y^2} \right) - \frac{\Gamma}{4\pi} \log\left(x^2+y^2\right)
+			\end{equation}
+
+			
+
+			que se puede reorganizar a la ecuación cuadrática
+			\begin{equation}
+				z^2-2i\gamma a z - a^2 = 0, \quad \text{with}\quad \gamma =\frac{C}{4\pi Ua}.
+			\end{equation}
+			con 
+			\begin{equation}
+				z^2-2i\gamma a z - a^2 = 0, \quad \text{with}\quad \gamma =\frac{C}{4\pi Ua}.
+			\end{equation}
+			Las raíces de esta ecuación son
+			\begin{equation}
+				\frac{z}{a} = i\gamma \pm \sqrt{1-\gamma^2}.
+			\end{equation}
+			por lo que cuando $\gamma = 0$ no hay circulación con puntos de estancamiento en $z =\pm a$ conforme $\gamma$ crece, la circulación en sentido contrario a las agujas del reloj hace que los puntos de estancamiento se muevan hacia arriba alrededor del círculo. Cuando alcanza el valor 1, los dos puntos de estancamiento se unen en la parte superior del cilindro $z = ia$. Si $\gamma > 1$ , un punto de estancamiento se mueve hacia el flujo; el otro está dentro del círculo.
+
+
+
+		
 
 \newpage
 \section*{Conclusiones.}

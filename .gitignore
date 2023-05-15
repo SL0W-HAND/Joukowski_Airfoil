@@ -1,3 +1,5 @@
 *.pdf
 *.synctex.gz
 media/Tex
+media/texts
+.vscode

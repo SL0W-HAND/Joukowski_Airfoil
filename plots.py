@@ -2,103 +2,136 @@ from manim import *
 import numpy as np
 
 
-class RoodHeatGraph(ThreeDScene):
+def circle(theta):
+    return np.exp(complex(0, PI*theta))
+
+
+def shiftfunction(function):
+    return complex(0.2, 0.15) - function
+
+
+def joukouski(z):
+    return z + ((1.2)**2)/z
+
+
+class JoukouskiTransform(Scene):
     def construct(self):
-        # Set background color
-        self.camera.background_color = "#ece6e2"
-        # 3d axis scene configurations
-        axes_3d = ThreeDAxes(
-            x_range=(0, 15),
-            y_range=(0, 16),
-            z_range=(0, 1.5),
-            z_length=3,
-            # fill_color=BLACK,
-            axis_config={"include_numbers": True}
-        )
-        axes_3d.set_color(BLACK)
+        # create two Cartesian planes
+        plane1 = NumberPlane(x_range=(-3, 3), y_range=(-3, 3))
+        plane2 = NumberPlane(x_range=(-3, 3), y_range=(-3, 3))
+        plane3 = NumberPlane(x_range=(-3, 3), y_range=(-3, 3))
 
-        # Labels
-        y_label = axes_3d.get_y_axis_label("y").shift(LEFT*2).shift(UP)
-        x_label = axes_3d.get_x_axis_label("x").shift(DOWN*2)
-        z_label = axes_3d.get_z_axis_label("z").shift(DOWN*2)
-        for i in range(0, 1):
-            axes_3d.get_z_axis().numbers[i].rotate(
-                axis=RIGHT, angle=180 * DEGREES).rotate(axis=UP, angle=-90 * DEGREES)
+        # position the axes
+        plane1.to_corner(UL)
+        plane3.to_corner(UR)
+        plane2.to_edge(DOWN)
+        axes = VGroup(plane1, plane2, plane3)
 
-        grid_labels = VGroup(x_label, y_label, z_label)
-        grid_labels.set_color(BLACK)
+        self.add(axes)
+        # create the arrow
+        arrow = Arrow(start=plane1.get_right(),
+                      end=plane2.get_left(), buff=SMALL_BUFF)
+        label1 = Tex(r"$Z=z_0 - z$", font_size=20).next_to(arrow, DOWN)
+        # add the arrow to the scene
 
-        # Math functions
-        def heatFunction(x, y):
-            return (np.e**(-0.4*y))*(np.sin(x))
+        arrow2 = Arrow(start=plane1.get_right(),
+                       end=plane3.get_left(), buff=SMALL_BUFF)
+        label2 = Tex(
+            r"$w = z_0 - z-\frac{a}{z_0 - z}$", font_size=20).next_to(arrow2, UP)
 
-        # Math functions to graphs
+        arrow3 = Arrow(start=plane2.get_right(),
+                       end=plane3.get_left(), buff=SMALL_BUFF)
+        label3 = Tex(r"$w = Z-\frac{a}{Z}$",
+                     font_size=20).next_to(arrow3, DOWN)
+        self.add(arrow, label1, arrow2, label2, arrow3, label3)
 
-        # esta no funciono
-        curves = VGroup(*[
-            ParametricFunction(
-                lambda t: axes_3d.coords_to_point(t, y, heatFunction(t, y)),
-                t_range=[0, 14, 0.1],
-                stroke_width=2,
-                stroke_color=color_gradient((RED, BLUE), 2),
-            ) for y in range(0, 15, 3)
-        ])
-
-        resolution_fa = 30
-
-        surface = Surface(
-            lambda u, v: axes_3d.c2p(u, v, heatFunction(u, v)),
-            resolution=(resolution_fa, resolution_fa),
-            v_range=[0, 15],
-            u_range=[0, 14],
-            stroke_color=GRAY,
-        )
-        surface.set_style(fill_opacity=0.1)
-
-        surface2 = Surface(
-            lambda u, v: axes_3d.c2p(u, 1, heatFunction(u, 1)),
-            resolution=(resolution_fa, resolution_fa),
-            v_range=[0, 1],
-            u_range=[0, 14],
-            stroke_width=5
-        ).set_fill_by_value(axes=axes_3d, colorscale=[(RED, -0.5), (YELLOW, 0), (GREEN, 0.5)], axis=2)
-
-        # aqui me atore
-        color_curves = VGroup(*[
-            Surface(
-                lambda u, v: axes_3d.c2p(u, y, heatFunction(u, y)),
-                resolution=(resolution_fa, resolution_fa),
-                u_range=[0, 14],
-                v_range=[0, 15],
-                stroke_width=5
-            ).set_fill_by_value(axes=axes_3d, colorscale=[(RED, -0.5), (YELLOW, 0), (GREEN, 0.5)], axis=2)
-            for y in range(0, 15, 3)])
-
-        # Elements in scene
-        self.add(axes_3d, grid_labels, surface, surface2, color_curves)
-
-        # Camara config
-        self.set_camera_orientation(
-            phi=75*DEGREES,
-            theta=-60*DEGREES,
-            zoom=0.9,
-            focal_distance=10000
+        curve = plane1.plot_parametric_curve(
+            lambda t: np.array(
+                [
+                    circle(t).real,
+                    circle(t).imag,
+                    0,
+                ]
+            ),
+            t_range=[0, 2 * PI],
+            color="#0FF1CE",
         )
 
+        curve2 = plane2.plot_parametric_curve(
+            lambda t: np.array(
+                [
+                    shiftfunction(circle(t)).real,
+                    shiftfunction(circle(t)).imag,
+                    0,
+                ]
+            ),
+            t_range=[0, 2 * PI],
+            color="#0FF1CE",
+        )
 
-class UniformFlowVectorField(Scene):
+        curve3 = plane3.plot_parametric_curve(
+            lambda t: np.array(
+                [
+                    joukouski(shiftfunction(circle(t))).real,
+                    joukouski(shiftfunction(circle(t))).imag,
+                    0,
+                ]
+            ),
+            t_range=[0, 2 * PI],
+            color="#0FF1CE",
+        )
+
+        self.add(curve, curve2, curve3)
+
+
+class Airfoil(Scene):
     def construct(self):
-        plane = NumberPlane(x_range=(-5, 5, 1), y_range=(-5, 5, 1))
-        self.add(plane)
 
-        def stream_lines_func(point):
-            x, y = point[:2]
-            return np.array([x, y, 0])
+        plane = NumberPlane(x_range=(-3, 3), y_range=(-0.5, 2))
+        curve = plane.plot_parametric_curve(
+            lambda t: np.array(
+                [
+                    joukouski(shiftfunction(circle(t))).real,
+                    joukouski(shiftfunction(circle(t))).imag,
+                    0,
+                ]
+            ),
+            t_range=[0, 2 * PI],
+            color="#0FF1CE",
+        )
+        self.add(plane, curve)
 
-        stream_lines = StreamLines(stream_lines_func, delta_x=0.5, delta_y=0.5)
-        self.add(stream_lines)
+
+class uniformFlow(Scene):
+    def construct(self):
+        def func(pos): return ((80*RIGHT))
+
+        self.add(ArrowVectorField(func))
+
+
+class vortex(Scene):
+    def construct(self):
+        def func(pos):
+            if np.abs(pos[0]) < 0.5 and np.abs(pos[1]) < 0.5:
+                return 0*UR
+            else:
+                return 10*((-1)*pos[1]/(2*np.pi*(pos[0]**2 + pos[1]**2))*RIGHT + (pos[0]/(2*np.pi*(pos[0]**2 + pos[1]**2)))*UP)
+        vf = ArrowVectorField(func)
+        self.add(vf)
+
+
+class FlowAroundCircle(Scene):
+    def construct(self):
+        def func(pos):
+            if np.abs(pos[0]) < 1 and np.abs(pos[1]) < 1:
+                return 0*UR
+            else:
+                return (200*pos[1]**2/(pos[0]**2 + pos[1]**2)**2 + 100 - 100/(pos[0]**2 + pos[1]**2))*RIGHT + (-200*pos[0]*pos[1]/(pos[0]**2 + pos[1]**2)**2)*UP
+        vf = ArrowVectorField(func)
+        plane = NumberPlane()
+        self.add(vf, plane)
 
 
 with tempconfig({"quality": "medium_quality", "preview": False, "pixel_width": 1920, "pixel_height": 1080}):
-    scene = AV()
+    scene = FlowAroundCircle()
     scene.render()
