@@ -1,4 +1,4 @@
-%Plantilla experimental para un reporte de laboratorio realizado en LaTex por Jorge A. el 10 de marzo del 2021.
+%% Plantilla experimental para un reporte de laboratorio realizado en LaTex por Jorge A. el 10 de marzo del 2021.
 \documentclass[12pt]{article}
 \usepackage[a4paper, left=3.17cm, right=3.17cm, top=2.54cm, bottom=2.54cm]{geometry}
 \usepackage[T1]{fontenc}
@@ -113,7 +113,7 @@
 	
 	L transformada es
 	\begin{equation}
-		w = z - a/z
+		w = z + \frac{a^2}{z}
 		\label{eq:}
 	\end{equation}
 	
@@ -148,7 +148,6 @@
 	\end{equation}
 	$F(z)$ se llama el potencial complejo, donde $\psi$ es llamada  función de flujo y $\psi = c_n$ son lineas tangentes al flujo del fluido.
 	
-
 	%revisar 
 	 %55555555555555555%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -249,40 +248,72 @@
 		\subsubsection{Flujo uniforme alrededor de un circulo con circulacion}
 			si agregamos un vórtice al potencial definido en \ref{Potencial} se obtiene el flujo con circulación
 			\begin{equation}
-				w = Uz + \frac{ Ua^2}{z} - \frac{i \Gamma}{2 \pi}\log z
+				w = U_0z + \frac{ U_0R^2}{z} - \frac{i \Gamma}{2 \pi}\log (z)
 			\end{equation}
 			Donde  $\Gamma$ es la circulación, hallada empleando la condición de Kutta (una condición de límite viscoso basada en la observación física utilizada con un modelo teórico no viscoso) establece que el flujo sale suavemente del borde de salida afilado de una superficie aerodinámica, esta no sera deducida aquí por lo que solo usaremos la siguiente formula.
 
 			\begin{equation}
-				\Gamma=4 \pi V_0 \sqrt{\left(\mathbb{1}-\mu_\gamma\right)^2+\mu_y^2} \sin \left(\alpha+\sin ^{-1}\left(\frac{\mu_y}{\sqrt{\left(\mathbb{1}-\mu_\gamma\right)^2+\mu_y^2}}\right)\right) 
+				\Gamma=4 \pi U_0 \sqrt{\left(\mu_x-\mu_\gamma\right)^2+\mu_y^2} \sin \left(\alpha+\sin ^{-1}\left(\frac{\mu_y}{\sqrt{\left(\mu_x-\mu_\gamma\right)^2+\mu_y^2}}\right)\right) 
 				\label{eq:}
 			\end{equation}
 
-			Donde $\mu=\mu_z+i \mu_y$, y en este caso la función de flujo $ \psi $ es 
+			Donde $\mu=\mu_x+i \mu_y$, y en este caso la función de flujo $ \psi $ es 
+			\begin{equation}
+				\psi = U_0 y \left( 1 - \frac{a^2}{x^2+y^2} \right) - \frac{\Gamma}{4\pi} \log\left(x^2+y^2\right)
+			\end{equation}
+
+			\begin{figure}[!h]
+				\begin{small}
+					\begin{center}
+						\includegraphics[width=0.95\textwidth]{StreamLinesCircleCirculation_ManimCE_v0.17.1.png}
+					\end{center}
+					\caption{}
+					\label{fig:}
+				\end{small}
+			\end{figure}
+			
+
+			Ahora aplicando el mapeo conforme a la función compleja de potencial $W$
+
+			\begin{equation}
+				\begin{split}
+				\Phi(z) &= \Phi(Z(W(z)))\\ 
+						&=z_0-W(z)+\frac{a^2}{z_0-W(z)} \\
+						&= z_0-U_0z - \frac{ U_0R^2}{z} + \frac{i \Gamma}{2 \pi}\log (z)+\frac{a^2}{z_0-U_0z - \frac{ U_0R^2}{z} + \frac{i \Gamma}{2 \pi}\log (z)}\\
+						&=- \frac{R^{2} u_{0}}{z} + \frac{a^{2}}{- \frac{R^{2} u_{0}}{z} + \frac{i \gamma \log{\left(z \right)}}{2 \pi} + \mu - u_{0} z} + \frac{i \gamma \log{\left(z \right)}}{2 \pi} + \mu - u_{0} z\\
+						&=- \frac{R^{2} u_{0}}{x + i y} + \frac{a^{2}}{- \frac{R^{2} u_{0}}{x + i y} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right)} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right)\\
+						&=\frac{a^{2}}{\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\\
+				\end{split}	
+			\end{equation}
+
+			con la función de flujo $\psi$
 			
 			\begin{equation}
-				\psi = U y \left( 1 - \frac{a^2}{x^2+y^2} \right) - \frac{\Gamma}{4\pi} \log\left(x^2+y^2\right)
+				\begin{split}
+				\psi &= \frac{\gamma \log{\left(\sqrt{x^{2} + y^{2}} \right)}}{2 \pi} - u_{0} y - u_{0} \operatorname{im}{\left(\frac{R^{2}}{x + i y}\right)} + \operatorname{im}{\left(\mu\right)} + \operatorname{im}{\left(\frac{a^{2}}{- \frac{R^{2} u_{0}}{x + i y} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right)}\right)}\\
+				\label{eq:}
+				\end{split}	
+			\end{equation}
+
+			y la de potencial 
+			\begin{equation}
+				\begin{split}
+				\phi &=- \frac{\gamma \arg{\left(x + i y \right)}}{2 \pi} - u_{0} x - \frac{u_{0} x}{x^{2} + y^{2}} + \operatorname{re}{\left(\mu\right)} + \\ & \operatorname{re}{\left(\frac{a^{2}}{\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}}\right)}\\
+				\label{eq:}
+				\end{split}	
+			\end{equation}
+
+			\begin{equation}
+				\begin{split}
+				v_x &=\frac{\gamma y}{2 \pi \left(x^{2} + y^{2}\right)} + \frac{2 u_{0} x^{2}}{\left(x^{2} + y^{2}\right)^{2}} - u_{0} - \frac{u_{0}}{x^{2} + y^{2}} - \left(- \frac{\gamma x}{2 \pi \left(x^{2} + y^{2}\right)} + \frac{2 u_{0} x y}{\left(x^{2} + y^{2}\right)^{2}}\right) \operatorname{im}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)} + \left(- \frac{\gamma y}{2 \pi \left(x^{2} + y^{2}\right)} - u_{0} \left(\frac{x^{2}}{\left(x^{2} + y^{2}\right)^{2}} - \frac{y^{2}}{\left(x^{2} + y^{2}\right)^{2}}\right) + u_{0}\right) \operatorname{re}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)}\\
+				v_y =&- \frac{\gamma x}{2 \pi \left(x^{2} + y^{2}\right)} + \frac{2 u_{0} x y}{\left(x^{2} + y^{2}\right)^{2}} + \left(\frac{\gamma x}{2 \pi \left(x^{2} + y^{2}\right)} - \frac{2 u_{0} x y}{\left(x^{2} + y^{2}\right)^{2}}\right) \operatorname{re}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)} - \left(- \frac{\gamma y}{2 \pi \left(x^{2} + y^{2}\right)} - u_{0} \left(\frac{x^{2}}{\left(x^{2} + y^{2}\right)^{2}} - \frac{y^{2}}{\left(x^{2} + y^{2}\right)^{2}}\right) + u_{0}\right) \operatorname{im}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)}\\
+				\label{eq:}
+				\end{split}	
 			\end{equation}
 
 			
+			
 
-			que se puede reorganizar a la ecuación cuadrática
-			\begin{equation}
-				z^2-2i\gamma a z - a^2 = 0, \quad \text{with}\quad \gamma =\frac{C}{4\pi Ua}.
-			\end{equation}
-			con 
-			\begin{equation}
-				z^2-2i\gamma a z - a^2 = 0, \quad \text{with}\quad \gamma =\frac{C}{4\pi Ua}.
-			\end{equation}
-			Las raíces de esta ecuación son
-			\begin{equation}
-				\frac{z}{a} = i\gamma \pm \sqrt{1-\gamma^2}.
-			\end{equation}
-			por lo que cuando $\gamma = 0$ no hay circulación con puntos de estancamiento en $z =\pm a$ conforme $\gamma$ crece, la circulación en sentido contrario a las agujas del reloj hace que los puntos de estancamiento se muevan hacia arriba alrededor del círculo. Cuando alcanza el valor 1, los dos puntos de estancamiento se unen en la parte superior del cilindro $z = ia$. Si $\gamma > 1$ , un punto de estancamiento se mueve hacia el flujo; el otro está dentro del círculo.
-
-
-
-		
 
 \newpage
 \section*{Conclusiones.}
