@@ -132,6 +132,17 @@ class FlowAroundCircle(Scene):
         self.add(vf, plane)
 
 
+class StreamLinesCircle(Scene):
+    def construct(self):
+        def func(pos):
+            if np.abs(pos[0]) < 1 and np.abs(pos[1]) < 1:
+                return 0*UR
+            else:
+                return (200*pos[1]**2/(pos[0]**2 + pos[1]**2)**2 + 100 - 100/(pos[0]**2 + pos[1]**2))*RIGHT + (-200*pos[0]*pos[1]/(pos[0]**2 + pos[1]**2)**2)*UP
+
+        self.add(StreamLines(func))
+
+
 with tempconfig({"quality": "medium_quality", "preview": False, "pixel_width": 1920, "pixel_height": 1080}):
-    scene = FlowAroundCircle()
+    scene = StreamLinesCircle()
     scene.render()
