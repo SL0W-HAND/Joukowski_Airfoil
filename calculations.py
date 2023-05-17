@@ -6,7 +6,7 @@ z, eta, zeta, eta0 = symbols('z eta zeta eta0')
 
 #z = x+I*y
 
-zeta = I*y
+zeta = x+I*y
 
 z = (zeta-sqrt(zeta**2-4*a**2))/2-eta0
 

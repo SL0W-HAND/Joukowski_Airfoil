@@ -112,8 +112,7 @@
 	
 	La transformada es
 	\begin{equation}
-		\zeta = \eta + \frac{a^2}{\eta}
-		\label{eq:}
+		\zeta = \eta + \frac{a^2}{\eta}	
 	\end{equation}
 	
 	\noindent y usando la técnica de transformación compuesta asi es como podemos pasar de un circulo a este perfil aerodinámico
@@ -185,7 +184,6 @@
 						\includegraphics[width=0.95\textwidth]{uniformFlow_ManimCE_v0.17.1.png}
 					\end{center}
 					\caption{}
-					\label{fig:}
 				\end{small}
 			\end{figure}
 			
@@ -203,7 +201,6 @@
 						\includegraphics[width=0.95\textwidth]{vortex_ManimCE_v0.17.1.png}
 					\end{center}
 					\caption{}
-					\label{fig:}
 				\end{small}
 			\end{figure}
 			
@@ -240,7 +237,6 @@
 					\includegraphics[width=0.95\textwidth]{FlowAroundCircle_ManimCE_v0.17.1.png}
 				\end{center}
 				\caption{}
-				\label{fig:}
 			\end{small}
 		\end{figure}
 		
@@ -253,7 +249,6 @@
 
 			\begin{equation}
 				\Gamma=4 \pi U_0 \eta_{0_y}
-				\label{eq:}
 			\end{equation}
 			Donde $\eta_{0_y}$ es la parte compleja del centro del circulo en el plano $\eta$ después de hacer la transformación del circulo unitario en el plano $z$ al plano $\eta$, y en este caso la función de flujo $ \psi $ es 
 			\begin{equation}
@@ -266,7 +261,6 @@
 						\includegraphics[width=0.95\textwidth]{StreamLinesCircleCirculation_ManimCE_v0.17.1.png}
 					\end{center}
 					\caption{}
-					\label{fig:}
 				\end{small}
 			\end{figure}
 			
@@ -280,27 +274,46 @@
 
 			\begin{equation}
 				\Xi(\zeta)= W(Z(\zeta))	= \Phi +i \Psi 			
-				\label{eq:}
 			\end{equation}
 			y la función inversa es:
 			\begin{equation}
 				Z(\zeta)= \frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0
-				\label{eq:}
 			\end{equation}
 			Haciendo la evaluación $W(Z(\zeta))$
 			
 			\begin{equation}
 				\begin{split}
-					W(Z(\zeta)) = \Xi(\zeta) =& U_0 \frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0 + \frac{ U_0R^2}{\frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0} + \frac{i \Gamma}{2 \pi}\log \left(\frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0\right)\\
-				\end{split}		
-				\label{eq:}
+					W(Z(\zeta)) = \Xi(\zeta) =& U_0 \frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0 + \frac{ U_0R^2}{\frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0}\\ 
+					&+ \frac{i \Gamma}{2 \pi}\log \left(\frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0\right)\\
+				\end{split}	
 			\end{equation}
 			y cuya función de flujo $\Psi $ es:
+			\begin{equation}
+				Im[\Xi(\zeta)]=\Psi 
+			\end{equation}
+			(quiten esto si quieren )
 			\begin{equation}
 				\Psi = \frac{\Gamma \log{\left(\left|{\eta_{0} - \frac{x}{2} - \frac{i y}{2} + \frac{\sqrt{- 4 a^{2} + x^{2} + 2 i x y - y^{2}}}{2}}\right| \right)}}{2 \pi} + \frac{R^{2} u_{0} \left(- \frac{y}{2} + \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \sin{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} + \operatorname{im}{\left(\eta_{0}\right)}\right)}{\left(\frac{x}{2} - \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \cos{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} - \operatorname{re}{\left(\eta_{0}\right)}\right)^{2} + \left(\frac{y}{2} - \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \sin{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} - \operatorname{im}{\left(\eta_{0}\right)}\right)^{2}} + u_{0} \left(\frac{y}{2} - \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \sin{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} - \operatorname{im}{\left(\eta_{0}\right)}\right)
 				\label{eq:}
 			\end{equation}
-			Por motivos se simplicidad no mostrare cuanto vale $v_x$ y $v_y$ 
+			Por motivos se simplicidad no mostrare cuanto vale $v_x$ y $v_y$ pero se sobrentiende que es
+			\begin{equation}
+				\begin{split}
+					v_x &= \frac{\partial \Psi }{\partial y}\\
+					v_x &= \frac{\partial \Psi }{\partial y}
+				\end{split}
+			\end{equation}
+			y aquí la representación del flujo en el perfil alar original
+			\begin{figure}
+				\begin{small}
+					\begin{center}
+						\includegraphics[width=0.95\textwidth]{StreamLinesAirfoil_ManimCE_v0.17.1}
+					\end{center}
+					\caption{}
+				\end{small}
+			\end{figure}
+			
+			
 			
 		 	
 			

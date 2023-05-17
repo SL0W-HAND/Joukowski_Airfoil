@@ -51,7 +51,7 @@ class JoukouskiTransform(Scene):
         )
         plane2 = NumberPlane(
             x_range=(-1.1, (1.1+eta0.real)),
-            y_range=(-1, 1, (1.1+eta0.imag)),
+            y_range=(-1, 1.3, (1.1+eta0.imag)),
             background_line_style={
                 "stroke_color": WHITE,
                 "stroke_width": 0,
@@ -77,6 +77,12 @@ class JoukouskiTransform(Scene):
         axes = VGroup(plane1, plane2, plane3)
 
         self.add(axes)
+
+        dot = Dot(color="#000").move_to(
+            plane2.coords_to_point(eta0.real, eta0.imag))
+        dotLabel = Tex(r"$\eta_0$", font_size=30,
+                       color="#000").next_to(dot, 0.5 * UR)
+        self.add(dotLabel, dot)
         # create the arrow
         arrow = Arrow(
             start=plane1.get_bottom(),
@@ -162,6 +168,7 @@ class JoukouskiTransform(Scene):
 class Airfoil(Scene):
     def construct(self):
         self.camera.background_color = "#FFF"
+        sq = Square(side_length=20.0)
 
         plane = NumberPlane(
             x_range=(-3, 3),
@@ -175,7 +182,7 @@ class Airfoil(Scene):
             },
             axis_config={"color": BLACK}
         )
-
+        sq.move_to([0, 0, 0])
         curve = plane.plot_parametric_curve(
             lambda t: np.array(
                 [
@@ -185,10 +192,12 @@ class Airfoil(Scene):
                 ]
             ),
             t_range=[0, 2 * np.pi],
-            color="#000",
-            stroke_width=5
+            color="#ece6e2",
+            stroke_width=0
         )
-        self.add(plane, curve)
+        un = Intersection(sq, curve, color="#ece6e2",
+                          fill_opacity=1, stroke_color=BLACK)
+        self.add(plane, curve, un)
 
 
 class uniformFlow(Scene):
@@ -208,7 +217,8 @@ class vortex(Scene):
                 return 0*UR
             else:
                 return 10*((-1)*pos[1]/(2*np.pi*(pos[0]**2 + pos[1]**2))*RIGHT + (pos[0]/(2*np.pi*(pos[0]**2 + pos[1]**2)))*UP)
-        vf = ArrowVectorField(func, opacity=25).scale(2.3)
+        vf = ArrowVectorField(func, opacity=25, min_color_scheme_value=1.2,
+                              stroke_width=7, max_color_scheme_value=3,).scale(2.3)
         self.add(vf)
 
 
@@ -221,15 +231,26 @@ class FlowAroundCircle(Scene):
             if np.abs(pos[0]) < 1 and np.abs(pos[1]) < 1:
                 return 0*UR
             else:
-                return ((200*pos[1]**2/(pos[0]**2 + pos[1]**2)**2 + 100 - 100/(pos[0]**2 + pos[1]**2))*RIGHT + (-200*pos[0]*pos[1]/(pos[0]**2 + pos[1]**2)**2)*UP)/80
-        vf = ArrowVectorField(func).scale(2.3)
+                return ((2*u0*pos[1]**2/(pos[0]**2 + pos[1]**2)**2 + u0 - u0/(pos[0]**2 + pos[1]**2))*RIGHT + (-2*u0*pos[0]*pos[1]/(pos[0]**2 + pos[1]**2)**2)*UP)/80
+        vf = ArrowVectorField(func, stroke_width=25, min_color_scheme_value=((u0-20)/80),
+                              max_color_scheme_value=(u0+20)/80).scale(2.3)
+
         plane = NumberPlane(background_line_style={
             "stroke_color": WHITE,
             "stroke_width": 0,
             "stroke_opacity": 0.6
         },
             axis_config={"color": BLACK})
-        self.add(vf, plane)
+
+        stream = StreamLines(
+            func, stroke_width=3, max_anchors_per_line=20, min_color_scheme_value=((u0-20)/80),
+            max_color_scheme_value=(u0+20)/80
+        ).scale(2.3).move_to(
+            plane.coords_to_point(3, 0))
+        circle = Circle(radius=2.3, color="#ece6e2", stroke_color=BLACK, fill_opacity=1).move_to(
+            plane.coords_to_point(0, 0))
+
+        self.add(vf, stream, plane, circle,)
 
 
 class StreamLinesCircle(Scene):
@@ -256,8 +277,8 @@ class StreamLinesCircleCirculation(Scene):
                 return 0*UR
             else:
                 return ((gamma*pos[1]/(2*np.pi*(pos[0]**2 + pos[1]**2)) - 2*R**2*u0*pos[0]**2/(pos[0]**2 + pos[1]**2)**2 + R**2*u0/(pos[0]**2 + pos[1]**2) + u0)*RIGHT + (-gamma*pos[0]/(2*np.pi*(pos[0]**2 + pos[1]**2)) - 2*R**2*u0*pos[0]*pos[1]/(pos[0]**2 + pos[1]**2)**2)*UP)/div
-        vf = ArrowVectorField(func, min_color_scheme_value=u0,
-                              max_color_scheme_value=(u0+10))
+        vf = ArrowVectorField(func, min_color_scheme_value=((u0-15)/100),
+                              max_color_scheme_value=((u0+15)/100))
         plane = NumberPlane(
             background_line_style={
                 "stroke_color": WHITE,
@@ -266,9 +287,11 @@ class StreamLinesCircleCirculation(Scene):
             },
             axis_config={"color": BLACK}
         )
+        circle = Circle(radius=1, color="#ece6e2", stroke_color=BLACK, fill_opacity=1).move_to(
+            plane.coords_to_point(0, 0))
         items = VGroup(vf, plane, StreamLines(
-            func, stroke_width=3, max_anchors_per_line=30, min_color_scheme_value=u0,
-            max_color_scheme_value=(u0+10)))
+            func, stroke_width=3, max_anchors_per_line=30, min_color_scheme_value=((u0-15)/100),
+            max_color_scheme_value=((u0+15)/100)), circle)
         self.add(items.scale(2))
 
 
@@ -295,6 +318,8 @@ def derivate(func, x0, y0, param):
 class StreamLinesAirfoil(Scene):
     def construct(self):
         self.camera.background_color = "#FFF"
+        sq = Square(side_length=20.0)
+        sq.move_to([0, 0, 0])
 
         def func1(pos):
             x = pos[0]
@@ -341,8 +366,12 @@ class StreamLinesAirfoil(Scene):
             ),
             t_range=[0, 2 * np.pi],
             color="#000",
+            stroke_width=0
         )
-        items = VGroup(vf, plane, curve, stream)
+        area = Intersection(sq, curve,              color="#ece6e2",
+                            fill_opacity=1, stroke_color=BLACK)
+        self.add_foreground_mobjects(area)
+        items = VGroup(vf, plane, area, stream)
         items.scale(2)
         self.add(items)
 
