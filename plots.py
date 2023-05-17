@@ -195,7 +195,8 @@ class uniformFlow(Scene):
     def construct(self):
         self.camera.background_color = "#FFF"
         def func(pos): return ((80*RIGHT))
-        self.add(ArrowVectorField(func).scale(2))
+        self.add(ArrowVectorField(func, min_color_scheme_value=u0,
+                                  max_color_scheme_value=(u0+10)).scale(2))
 
 
 class vortex(Scene):
@@ -255,7 +256,8 @@ class StreamLinesCircleCirculation(Scene):
                 return 0*UR
             else:
                 return ((gamma*pos[1]/(2*np.pi*(pos[0]**2 + pos[1]**2)) - 2*R**2*u0*pos[0]**2/(pos[0]**2 + pos[1]**2)**2 + R**2*u0/(pos[0]**2 + pos[1]**2) + u0)*RIGHT + (-gamma*pos[0]/(2*np.pi*(pos[0]**2 + pos[1]**2)) - 2*R**2*u0*pos[0]*pos[1]/(pos[0]**2 + pos[1]**2)**2)*UP)/div
-        vf = ArrowVectorField(func)
+        vf = ArrowVectorField(func, min_color_scheme_value=u0,
+                              max_color_scheme_value=(u0+10))
         plane = NumberPlane(
             background_line_style={
                 "stroke_color": WHITE,
@@ -265,7 +267,8 @@ class StreamLinesCircleCirculation(Scene):
             axis_config={"color": BLACK}
         )
         items = VGroup(vf, plane, StreamLines(
-            func, stroke_width=3, max_anchors_per_line=30))
+            func, stroke_width=3, max_anchors_per_line=30, min_color_scheme_value=u0,
+            max_color_scheme_value=(u0+10)))
         self.add(items.scale(2))
 
 
@@ -275,8 +278,14 @@ def potential1(x, y):
     return res
 
 
+def potential2(x, y):
+    res = gamma*np.log(np.abs(-eta0 + x/2 + complex(0, 1)*y/2 + np.sqrt(-4*a**2 + x**2 + 2*complex(0, 1)*x*y - y**2)/2))/(2*np.pi) + R**2*u0*(-y/2 - (4*x**2*y**2 + (-4*a**2 + x**2 - y**2)**2)**(1/4)*np.sin(np.arctan2(2*x*y, -4*a**2 + x**2 - y**2)/2)/2 + (eta0.imag))/((x/2 + (4*x**2*y**2 + (-4*a**2 + x**2 - y**2)**2)**(1/4)*np.cos(
+        np.arctan2(2*x*y, -4*a**2 + x**2 - y**2)/2)/2 - (eta0.real))**2 + (y/2 + (4*x**2*y**2 + (-4*a**2 + x**2 - y**2)**2)**(1/4)*np.sin(np.arctan2(2*x*y, -4*a**2 + x**2 - y**2)/2)/2 - (eta0.imag))**2) + u0*(y/2 + (4*x**2*y**2 + (-4*a**2 + x**2 - y**2)**2)**(1/4)*np.sin(np.arctan2(2*x*y, -4*a**2 + x**2 - y**2)/2)/2 - (eta0.imag))
+    return res
+
+
 def derivate(func, x0, y0, param):
-    h = 0.001
+    h = 0.0001
     if param == "x":
         return (func(x0+h, y0) - func(x0, y0))/h
     else:
@@ -285,18 +294,43 @@ def derivate(func, x0, y0, param):
 
 class StreamLinesAirfoil(Scene):
     def construct(self):
+        self.camera.background_color = "#FFF"
+
         def func1(pos):
             x = pos[0]
             y = pos[1]
             p = complex(x, y)
-            div = 10
-            if np.sqrt(((inverseJoukouski2(inverseShiftfunction(p))).real)**2 + ((inverseJoukouski2(inverseShiftfunction(p))).imag)**2) >= 1 and np.sqrt(((inverseJoukouski1(inverseShiftfunction(p))).real)**2 + ((inverseJoukouski1(inverseShiftfunction(p))).imag)**2) >= 1:
+            div = 250
+            if np.sqrt(((inverseJoukouski2(inverseShiftfunction(p))).real)**2 + ((inverseJoukouski2(inverseShiftfunction(p))).imag)**2) >= 1.2 and np.sqrt(((inverseJoukouski1(inverseShiftfunction(p))).real)**2 + ((inverseJoukouski1(inverseShiftfunction(p))).imag)**2) >= 1.2:
                 return 0 * UR
             else:
-                return ((derivate(potential, x, y, "y"))*RIGHT + (-1*derivate(potential, x, y, "x"))*UP)/div
+                if x < -eta0.real:
+                    return ((derivate(potential1, x, y, "y"))*RIGHT + (-1*derivate(potential1, x, y, "x"))*UP)/div
+                elif x > -eta0.real and x < eta0.real:
+                    return (((derivate(potential2, x+0.3, y+0.3, "y")))*RIGHT + (0)*UP)/div
+                else:
+                    return ((derivate(potential2, x, y, "y"))*RIGHT + (-1*derivate(potential2, x, y, "x"))*UP)/div
 
-        vf = ArrowVectorField(func1)
-        plane = NumberPlane()
+        vf = ArrowVectorField(
+            func1,
+            min_color_scheme_value=(u0/250),
+            max_color_scheme_value=(u0+10)/250
+        )
+        stream = StreamLines(
+            func1, stroke_width=3, max_anchors_per_line=10, min_color_scheme_value=(u0/250),
+            max_color_scheme_value=(u0+10)/250
+        )
+        plane = NumberPlane(
+            background_line_style={
+                "stroke_color": WHITE,
+                "stroke_width": 0,
+                "stroke_opacity": 0.6
+            },
+            axis_config={
+                "color": BLACK,
+                "stroke_width": 2,
+            }
+        )
         curve = plane.plot_parametric_curve(
             lambda t: np.array(
                 [
@@ -306,10 +340,11 @@ class StreamLinesAirfoil(Scene):
                 ]
             ),
             t_range=[0, 2 * np.pi],
-            color="#FFF",
+            color="#000",
         )
-
-        self.add(vf, plane, curve)
+        items = VGroup(vf, plane, curve, stream)
+        items.scale(2)
+        self.add(items)
 
 
 with tempconfig({"quality": "medium_quality", "preview": False, "pixel_width": 1920, "pixel_height": 1080}):
