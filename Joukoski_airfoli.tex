@@ -102,33 +102,32 @@
 	\begin{figure}[!h]
 		\begin{small}
 			\begin{center}
-				\includegraphics[width=0.95\textwidth]{Airfoil_ManimCE.png}
+				\includegraphics[width=0.95\textwidth]{Airfoil_ManimCE_v0.17.1.png}
 			\end{center}
-			\caption{}
-			\label{fig:}
+			\caption{Perfil Alar de Joukowski}
 		\end{small}
 	\end{figure}
 	
 	\noindent Este es un problema el cual parece demasiado complicado a primera vista, pero podemos valernos de uno de los resultados de flujo importantes obtenidos mediante el mapeo conforme son las soluciones del flujo de una familia de formas aerodinámicas conocidas como perfiles de Joukowski, que son el resultado de  la transformada de Joukowski, que debe su nombre a Nikolai Zhukovsky (quién la publicó en 1910), es una transformación conforme históricamente utilizada para entender algunos principios del diseño de perfiles.
 	
-	L transformada es
+	La transformada es
 	\begin{equation}
-		w = z + \frac{a^2}{z}
+		\zeta = \eta + \frac{a^2}{\eta}
 		\label{eq:}
 	\end{equation}
 	
-	y usando la técnica de transformación compuesta asi es como podemos pasar de un circulo a este perfil aerodinámico
+	\noindent y usando la técnica de transformación compuesta asi es como podemos pasar de un circulo a este perfil aerodinámico
 	\begin{figure}[!h]
 		\begin{small}
 			\begin{center}
 				\includegraphics[width=0.95\textwidth]{JoukouskiTransform_ManimCE_v0.17.1.png}
 			\end{center}
 			\caption{}
-			\label{fig:1}
+			\label{TransformacionCompuesta}
 		\end{small}
 	\end{figure}
 	
-	De manera que comenzamos con una solución en el flujo que pasa por un cilindro circular con circulación para después hacer uso del mapeo conforme para transformar el cilindro en una forma aerodinámica.	
+	\noindent De manera que podemos encontrar primero la solución en el flujo que pasa alrededor de  un cilindro circular con circulación para después hacer uso del mapeo conforme para transformar el cilindro en una forma aerodinámica conservando la solución.	
 	
 	\noindent Primero debemos de hacer unas consideraciones teniendo en cuenta la dinámica de fluidos Considere que el movimiento de un fluido esta dado por un campo vectorial de velocidades $\vec{V}(x,y,z)$, además consideremos que el fluido es irrotacional es decir que se cumple $\vec{\nabla} \times \vec{V}=0 $ lo que implica que debe de existir una función de potencial de velocidad tal que $\vec{\nabla}\varphi = \vec{V}$.Además consideremos que con la region que estamos tratando no existen fuentes ó pozos de flujo, por lo que debe de cumplirse la ecuación de continuidad para dinámica de fluidos
 	\begin{equation}
@@ -160,7 +159,7 @@
 	\end{equation}
 	
 \section{Dinámica de fluidos}
-		Si sabemos que la ecuación de Laplace cumple la propiedad de ser una ecuación diferencial lineal, eso significa que podemos añadir soluciones entre si y también sera una solución, a estas soluciones individuales se les denomina flujos elementales, que servirán como bloques de construcción para construir la solución para flujos mas complejos, existen multitud de estas funciones, pero solo no concentaremos en aquellas que nos sirvan para este problema particular.
+		Si sabemos que la ecuación de Laplace cumple la propiedad de ser una ecuación diferencial lineal, eso significa que podemos añadir soluciones entre si y también sera una solución, a estas soluciones individuales se les denomina flujos elementales, que servirán como bloques de construcción para construir la solución para flujos mas complejos, existen multitud de estas funciones, pero solo no concentraremos en aquellas que nos sirvan para este problema particular.
 		\subsection{Flujo uniforme}
 			El potencial complejo 
 			\begin{equation}
@@ -191,12 +190,12 @@
 			\end{figure}
 			
 
-		\subsection{Vorice}
+		\subsection{Vórtice}
 			Un vórtice de magnitud $\Gamma $ en el origen esta representado por la función de potencial compleja
 			\begin{equation}
-				F(z)= -\frac{iC}{2 \pi} Log(z)
+				F(z)= \frac{i\Gamma}{2 \pi} Log(z)
 			\end{equation}
-			Para $\Gamma<0$ la rotación es en sentido de las manecillas del reloj, y para $\Gamma>0$ es en sentido contrario
+			Para $\Gamma>0$ la rotación es en sentido de las manecillas del reloj, y para $\Gamma<0$ es en sentido contrario
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			\begin{figure}[!h]
 				\begin{small}
@@ -216,7 +215,7 @@
 		\begin{theorem}[Teorema del circulo]
 			Suponga un potencial complejo $F(z)$, tal que ninguna de las singularidades de $F(z)$ ocurren en $|z|>R$, se cumple que
 			\begin{equation}
-				w = F(z) + \overline{F \left( \frac{R^2}{\overline{z} }\right)} 
+				W(z) = F(z) + \overline{F \left( \frac{R^2}{\overline{z} }\right)} 
 				\label{Teorema_del_circulo}
 			\end{equation}
 			(Donde la barra denota el complejo conjugado) tiene las mismas singularidades que $F(z)$ en $|z|>a $, y el circulo denotado por $|z|= R $ es una linea de flujo.
@@ -225,12 +224,12 @@
 		podemos darnos cuenta de que el potencial $F(z)= U_0 z$ satisface el teorema, por lo que podemos obtener el potencial complejo  del flujo al rededor de un circulo sustituyendo $F(z)= U_0 z$ en \ref*{Teorema_del_circulo} 
 
 		\begin{equation}
-			w = U_0 z + \frac{\overline{U_0 R^2} }{\overline{z} } = U_0 z +\frac{U_0 R^2}{z} 
+			W(z) = U_0 z + \frac{\overline{U_0 R^2} }{\overline{z} } = U_0 z +\frac{U_0 R^2}{z} 
 		\end{equation}
 
 		y la función de flujo es la parte compleja de $w$
 		\begin{equation}
-			Im[w]=\psi =  U_0 y \left( 1- \frac{R^2}{x^2 + y^2}\right)
+			Im[W(z)]=\psi =  U_0 y \left( 1- \frac{R^2}{x^2 + y^2}\right)
 			\label{Potencial}
 		\end{equation}
 		
@@ -248,18 +247,17 @@
 		\subsubsection{Flujo uniforme alrededor de un circulo con circulacion}
 			si agregamos un vórtice al potencial definido en \ref{Potencial} se obtiene el flujo con circulación
 			\begin{equation}
-				w = U_0z + \frac{ U_0R^2}{z} - \frac{i \Gamma}{2 \pi}\log (z)
+				W(z) = U_0z + \frac{ U_0R^2}{z} + \frac{i \Gamma}{2 \pi}\log (z)
 			\end{equation}
 			Donde  $\Gamma$ es la circulación, hallada empleando la condición de Kutta (una condición de límite viscoso basada en la observación física utilizada con un modelo teórico no viscoso) establece que el flujo sale suavemente del borde de salida afilado de una superficie aerodinámica, esta no sera deducida aquí por lo que solo usaremos la siguiente formula.
 
 			\begin{equation}
-				\Gamma=4 \pi U_0 \sqrt{\left(\mu_x-\mu_\gamma\right)^2+\mu_y^2} \sin \left(\alpha+\sin ^{-1}\left(\frac{\mu_y}{\sqrt{\left(\mu_x-\mu_\gamma\right)^2+\mu_y^2}}\right)\right) 
+				\Gamma=4 \pi U_0 \eta_{0_y}
 				\label{eq:}
 			\end{equation}
-
-			Donde $\mu=\mu_x+i \mu_y$, y en este caso la función de flujo $ \psi $ es 
+			Donde $\eta_{0_y}$ es la parte compleja del centro del circulo en el plano $\eta$ después de hacer la transformación del circulo unitario en el plano $z$ al plano $\eta$, y en este caso la función de flujo $ \psi $ es 
 			\begin{equation}
-				\psi = U_0 y \left( 1 - \frac{a^2}{x^2+y^2} \right) - \frac{\Gamma}{4\pi} \log\left(x^2+y^2\right)
+				\psi = \frac{\Gamma \log{\left(\sqrt{x^{2} + y^{2}} \right)}}{2 \pi} - \frac{R^{2} u_{0} y}{x^{2} + y^{2}} + u_{0} y
 			\end{equation}
 
 			\begin{figure}[!h]
@@ -273,48 +271,40 @@
 			\end{figure}
 			
 
-			Ahora aplicando el mapeo conforme a la función compleja de potencial $W$
+			Ahora que se conoce el potencial complejo $W(z)$ que esta asociado al $plano \quad z$ es posible mapear el potencial de cada punto en el $plano \quad z$ hacia hacia el $plano \quad \zeta$; es decir, el potencial asociado a un punto $z_0$ sear al mismo que al potencial de un punto  $\zeta_0$ que es el resultado de evaluar $z_0$ en la transformación que hemos hecho de un circulo al perfil alar Ó $\zeta_0=\zeta(z_0)$, aunque esto sea un camino valido, nuestros requerimientos nos exigen que tengamos una función de potencial complejo que llamaremos $\Xi(\zeta)$ que representa el potencial complejo en el plano $zeta$ en función de cada punto en este mismo.
+			
+			Usando la idea anterior es posible encontrar cual es el potencial en un punto $zeta_0$ encontrando cual es el potencial en el punto $z-0$ tal que $\zeta(z_0) = \zeta_0$, esto se hace mediante la inversa de la función de mapeo original
+			
+			
+			De manera similar a como se hizo la composición de funciones en $\ref*{TransformacionCompuesta}$ se obtiene una función $Z(\zeta)$, tal que podemos evaluar en el potencial asociado al plano $z$y obtener el potencial en el plano $\zeta$.
 
 			\begin{equation}
-				\begin{split}
-				\Phi(z) &= \Phi(Z(W(z)))\\ 
-						&=z_0-W(z)+\frac{a^2}{z_0-W(z)} \\
-						&= z_0-U_0z - \frac{ U_0R^2}{z} + \frac{i \Gamma}{2 \pi}\log (z)+\frac{a^2}{z_0-U_0z - \frac{ U_0R^2}{z} + \frac{i \Gamma}{2 \pi}\log (z)}\\
-						&=- \frac{R^{2} u_{0}}{z} + \frac{a^{2}}{- \frac{R^{2} u_{0}}{z} + \frac{i \gamma \log{\left(z \right)}}{2 \pi} + \mu - u_{0} z} + \frac{i \gamma \log{\left(z \right)}}{2 \pi} + \mu - u_{0} z\\
-						&=- \frac{R^{2} u_{0}}{x + i y} + \frac{a^{2}}{- \frac{R^{2} u_{0}}{x + i y} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right)} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right)\\
-						&=\frac{a^{2}}{\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\\
-				\end{split}	
+				\Xi(\zeta)= W(Z(\zeta))	= \Phi +i \Psi 			
+				\label{eq:}
 			\end{equation}
-
-			con la función de flujo $\psi$
+			y la función inversa es:
+			\begin{equation}
+				Z(\zeta)= \frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0
+				\label{eq:}
+			\end{equation}
+			Haciendo la evaluación $W(Z(\zeta))$
 			
 			\begin{equation}
 				\begin{split}
-				\psi &= \frac{\gamma \log{\left(\sqrt{x^{2} + y^{2}} \right)}}{2 \pi} - u_{0} y - u_{0} \operatorname{im}{\left(\frac{R^{2}}{x + i y}\right)} + \operatorname{im}{\left(\mu\right)} + \operatorname{im}{\left(\frac{a^{2}}{- \frac{R^{2} u_{0}}{x + i y} + \frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right)}\right)}\\
+					W(Z(\zeta)) = \Xi(\zeta) =& U_0 \frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0 + \frac{ U_0R^2}{\frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0} + \frac{i \Gamma}{2 \pi}\log \left(\frac{1}{2}\left(\zeta \pm  \sqrt{\zeta^2 -4R^2} \right) - \eta_0\right)\\
+					=&\frac{i \Gamma \log{\left(- \eta_{0} + \frac{\zeta}{2} - \frac{\sqrt{- 4 a^{2} + \zeta^{2}}}{2} \right)}}{2 \pi} + \frac{R^{2} u_{0}}{- \eta_{0} + \frac{\zeta}{2} - \frac{\sqrt{- 4 a^{2} + \zeta^{2}}}{2}} + u_{0} \left(- \eta_{0} + \frac{\zeta}{2} - \frac{\sqrt{- 4 a^{2} + \zeta^{2}}}{2}\right)\\
+				\end{split}		
 				\label{eq:}
-				\end{split}	
 			\end{equation}
-
-			y la de potencial 
+			y cuya función de flujo $\Psi $ es:
 			\begin{equation}
-				\begin{split}
-				\phi &=- \frac{\gamma \arg{\left(x + i y \right)}}{2 \pi} - u_{0} x - \frac{u_{0} x}{x^{2} + y^{2}} + \operatorname{re}{\left(\mu\right)} + \\ & \operatorname{re}{\left(\frac{a^{2}}{\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}}\right)}\\
+				\Psi = \frac{\Gamma \log{\left(\left|{\eta_{0} - \frac{x}{2} - \frac{i y}{2} + \frac{\sqrt{- 4 a^{2} + x^{2} + 2 i x y - y^{2}}}{2}}\right| \right)}}{2 \pi} + \frac{R^{2} u_{0} \left(- \frac{y}{2} + \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \sin{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} + \operatorname{im}{\left(\eta_{0}\right)}\right)}{\left(\frac{x}{2} - \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \cos{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} - \operatorname{re}{\left(\eta_{0}\right)}\right)^{2} + \left(\frac{y}{2} - \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \sin{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} - \operatorname{im}{\left(\eta_{0}\right)}\right)^{2}} + u_{0} \left(\frac{y}{2} - \frac{\sqrt[4]{4 x^{2} y^{2} + \left(- 4 a^{2} + x^{2} - y^{2}\right)^{2}} \sin{\left(\frac{\operatorname{atan}_{2}{\left(2 x y,- 4 a^{2} + x^{2} - y^{2} \right)}}{2} \right)}}{2} - \operatorname{im}{\left(\eta_{0}\right)}\right)
 				\label{eq:}
-				\end{split}	
 			\end{equation}
-
-			\begin{equation}
-				\begin{split}
-				v_x &=\frac{\gamma y}{2 \pi \left(x^{2} + y^{2}\right)} + \frac{2 u_{0} x^{2}}{\left(x^{2} + y^{2}\right)^{2}} - u_{0} - \frac{u_{0}}{x^{2} + y^{2}} - \left(- \frac{\gamma x}{2 \pi \left(x^{2} + y^{2}\right)} + \frac{2 u_{0} x y}{\left(x^{2} + y^{2}\right)^{2}}\right) \operatorname{im}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)} + \left(- \frac{\gamma y}{2 \pi \left(x^{2} + y^{2}\right)} - u_{0} \left(\frac{x^{2}}{\left(x^{2} + y^{2}\right)^{2}} - \frac{y^{2}}{\left(x^{2} + y^{2}\right)^{2}}\right) + u_{0}\right) \operatorname{re}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)}\\
-				v_y =&- \frac{\gamma x}{2 \pi \left(x^{2} + y^{2}\right)} + \frac{2 u_{0} x y}{\left(x^{2} + y^{2}\right)^{2}} + \left(\frac{\gamma x}{2 \pi \left(x^{2} + y^{2}\right)} - \frac{2 u_{0} x y}{\left(x^{2} + y^{2}\right)^{2}}\right) \operatorname{re}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)} - \left(- \frac{\gamma y}{2 \pi \left(x^{2} + y^{2}\right)} - u_{0} \left(\frac{x^{2}}{\left(x^{2} + y^{2}\right)^{2}} - \frac{y^{2}}{\left(x^{2} + y^{2}\right)^{2}}\right) + u_{0}\right) \operatorname{im}{\left(\frac{a^{2}}{\left(\frac{i \gamma \log{\left(x + i y \right)}}{2 \pi} + \mu - u_{0} \left(x + i y\right) - \frac{u_{0}}{x + i y}\right)^{2}}\right)}\\
-				\label{eq:}
-				\end{split}	
-			\end{equation}
-
+			Por motivos se simplicidad no mostrare cuanto vale $v_x$ y $v_y$ 
 			
 			
-
-
+			
 \newpage
 \section*{Conclusiones.}
 
