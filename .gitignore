@@ -1,5 +1,6 @@
 *.pdf
 *.synctex.gz
-media/Tex
-media/texts
+*.ps
+Plots/media/Tex
+Plots/media/texts
 .vscode
