@@ -3,4 +3,5 @@
 *.ps
 Plots/media/Tex
 Plots/media/texts
-.vscode
+.vscod
+*.xdv
